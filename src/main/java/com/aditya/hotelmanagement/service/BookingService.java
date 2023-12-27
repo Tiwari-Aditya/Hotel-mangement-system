@@ -5,6 +5,7 @@ import com.aditya.hotelmanagement.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,10 @@ public class BookingService {
 
     public Optional<Booking> getBookingById(Long id) {
         return bookingRepository.findById(id);
+    }
+
+    public Optional<Booking> getBookingByCheckInDate(LocalDate date){
+        return bookingRepository.findByCheckInDate(date);
     }
 
     public Booking saveBooking(Booking booking) {

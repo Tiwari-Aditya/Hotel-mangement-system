@@ -3,10 +3,12 @@ package com.aditya.hotelmanagement.controller;
 import com.aditya.hotelmanagement.model.Booking;
 import com.aditya.hotelmanagement.service.BookingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +29,11 @@ public class BookingController {
         Optional<Booking> booking = bookingService.getBookingById(id);
         return ResponseEntity.of(booking);
     }
-
+//    CheckInDate
+    @GetMapping("/by-checkin-date")
+    public Optional<Booking> getBookingByCheckInDate(@RequestParam(name = "checkinDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkinDate){
+        return  bookingService.getBookingByCheckInDate(checkinDate);
+    }
     @PostMapping
     public ResponseEntity<Booking> saveBooking(@RequestBody Booking booking) {
         Booking savedBooking = bookingService.saveBooking(booking);

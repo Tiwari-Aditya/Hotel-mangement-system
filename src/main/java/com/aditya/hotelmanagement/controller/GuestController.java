@@ -33,11 +33,7 @@ public class GuestController {
         Guest savedGuest = guestService.saveGuest(guest);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedGuest);
     }
-//    @PostMapping
-//    public ResponseEntity<Guest> saveGuest(@RequestBody Guest guest) {
-//        Guest savedGuest = guestService.saveOrUpdateGuest(guest);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(savedGuest);
-//    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGuest(@PathVariable Long id) {
