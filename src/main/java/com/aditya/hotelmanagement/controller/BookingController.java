@@ -29,7 +29,7 @@ public class BookingController {
         Optional<Booking> booking = bookingService.getBookingById(id);
         return ResponseEntity.of(booking);
     }
-//    CheckInDate
+
     @GetMapping("/by-checkin-date")
     public Optional<Booking> getBookingByCheckInDate(@RequestParam(name = "checkinDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkinDate){
         return  bookingService.getBookingByCheckInDate(checkinDate);

@@ -28,6 +28,12 @@ public class GuestController {
         return ResponseEntity.of(guest);
     }
 
+    @GetMapping("/by-first-name")
+    public ResponseEntity<List<Guest>> getGuestsByFirstNameStartingWith(@RequestParam("firstLetter") char firstLetter) {
+        List<Guest> guests = guestService.getGuestsByFirstNameStartingWith(firstLetter);
+        return ResponseEntity.ok(guests);
+    }
+
     @PostMapping
     public ResponseEntity<Guest> saveGuest(@RequestBody Guest guest) {
         Guest savedGuest = guestService.saveGuest(guest);

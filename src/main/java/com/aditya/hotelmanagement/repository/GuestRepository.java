@@ -5,8 +5,10 @@ import com.aditya.hotelmanagement.model.Guest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 //@Slf4j
 @Repository
 public interface GuestRepository extends JpaRepository<Guest, Long> {
-
+    List<Guest> findByFirstNameStartingWithIgnoreCase(char firstLetter);
 }

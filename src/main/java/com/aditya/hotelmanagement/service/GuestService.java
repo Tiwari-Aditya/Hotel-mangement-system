@@ -23,6 +23,10 @@ public class GuestService {
         return guestRepository.findById(id);
     }
 
+    public List<Guest> getGuestsByFirstNameStartingWith(char firstLetter) {
+        return guestRepository.findByFirstNameStartingWithIgnoreCase(firstLetter);
+    }
+
     public Guest saveGuest(Guest guest) {
         return guestRepository.save(guest);
     }
