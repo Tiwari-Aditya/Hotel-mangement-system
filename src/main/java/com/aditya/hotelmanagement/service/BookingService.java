@@ -3,6 +3,10 @@ package com.aditya.hotelmanagement.service;
 import com.aditya.hotelmanagement.model.Booking;
 import com.aditya.hotelmanagement.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -28,6 +32,12 @@ public class BookingService {
         return bookingRepository.findByCheckInDate(date);
     }
 
+    public Page<Booking> getBookingPagination(Integer pagenumber, Integer pagesize) {
+        Sort sort = Sort.by(Sort.Direction.ASC,"checkInDate");
+        Pageable pageable = PageRequest.of(pagenumber,pagesize,sort);
+        return bookingRepository.findAll(pageable);
+    }
+
     public Booking saveBooking(Booking booking) {
         return bookingRepository.save(booking);
     }
@@ -35,5 +45,6 @@ public class BookingService {
     public void deleteBooking(Long id) {
         bookingRepository.deleteById(id);
     }
+
 
 }

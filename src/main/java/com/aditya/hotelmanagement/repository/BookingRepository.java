@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     Optional<Booking> findByCheckInDate (LocalDate date);
+
 }

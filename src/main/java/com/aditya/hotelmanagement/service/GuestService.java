@@ -3,6 +3,10 @@ package com.aditya.hotelmanagement.service;
 import com.aditya.hotelmanagement.model.Guest;
 import com.aditya.hotelmanagement.repository.GuestRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,5 +37,11 @@ public class GuestService {
 
     public void deleteGuest(Long id) {
         guestRepository.deleteById(id);
+    }
+
+    public Page<Guest> getGuestPagination(Integer pagenumber, Integer pagesize) {
+        Sort sort = Sort.by(Sort.Direction.ASC,"firstName");
+        Pageable pageable = PageRequest.of(pagenumber,pagesize,sort);
+        return guestRepository.findAll(pageable);
     }
 }

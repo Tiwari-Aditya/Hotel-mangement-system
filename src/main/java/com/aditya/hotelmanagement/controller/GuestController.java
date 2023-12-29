@@ -1,8 +1,10 @@
 package com.aditya.hotelmanagement.controller;
 
+import com.aditya.hotelmanagement.model.Booking;
 import com.aditya.hotelmanagement.model.Guest;
 import com.aditya.hotelmanagement.service.GuestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,10 @@ public class GuestController {
     public ResponseEntity<List<Guest>> getGuestsByFirstNameStartingWith(@RequestParam("firstLetter") char firstLetter) {
         List<Guest> guests = guestService.getGuestsByFirstNameStartingWith(firstLetter);
         return ResponseEntity.ok(guests);
+    }
+    @GetMapping ("/pageing-and-sorting-guest/{pagenumber}/{pagesize}")
+    public Page<Guest> guestPagination(@PathVariable Integer pagenumber, @PathVariable Integer pagesize){
+        return guestService.getGuestPagination(pagenumber,pagesize);
     }
 
     @PostMapping
