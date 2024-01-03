@@ -23,7 +23,7 @@ public class Booking {
     @JoinColumn(name = "guest_id")
     private Guest guest;
 
-    private LocalDate checkInDate;
+    private LocalDate checkInDate = LocalDate.now();
     private LocalDate checkOutDate;
 
 }

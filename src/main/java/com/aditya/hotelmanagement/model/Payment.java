@@ -21,7 +21,7 @@ public class Payment {
     private Booking booking;
 
     private double amount;
-    private LocalDate paymentDate;
+    private LocalDateTime paymentDate = LocalDateTime.now();
 
 
 }
