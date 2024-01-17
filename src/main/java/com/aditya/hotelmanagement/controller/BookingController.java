@@ -1,5 +1,8 @@
 package com.aditya.hotelmanagement.controller;
 
+import com.aditya.hotelmanagement.customresponse.ApiResponse;
+import com.aditya.hotelmanagement.exception.BadRequestException;
+import com.aditya.hotelmanagement.exception.NotFoundException;
 import com.aditya.hotelmanagement.model.Booking;
 import com.aditya.hotelmanagement.service.BookingService;
 import lombok.RequiredArgsConstructor;
@@ -21,24 +24,29 @@ public class BookingController {
     private final BookingService bookingService;
 
     @GetMapping
-    public List<Booking> getAllBookings() {
-        return bookingService.getAllBookings();
+    public ResponseEntity<ApiResponse> getAllBookings() {
+        List<Booking> bookings = bookingService.getAllBookings();
+        ApiResponse response = new ApiResponse("success","All Bookings",bookings);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Booking> getBookingById(@PathVariable Long id) {
-        Optional<Booking> booking = bookingService.getBookingById(id);
-        return ResponseEntity.of(booking);
+    public ResponseEntity<ApiResponse> getBookingById(@PathVariable Long id) {
+        Booking booking = bookingService.getBookingById(id);
+        ApiResponse response = new ApiResponse("success", "Booking found", booking);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/by-checkin-date")
-    public Optional<Booking> getBookingByCheckInDate(@RequestParam(name = "checkinDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkinDate){
-        return  bookingService.getBookingByCheckInDate(checkinDate);
+    public ResponseEntity<ApiResponse> getBookingByCheckInDate(@RequestParam(name = "checkinDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkinDate) {
+        Booking booking = bookingService.getBookingByCheckInDate(checkinDate);
+        ApiResponse response = new ApiResponse("success", "Booking found", booking);
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping ("/pageing-and-sorting-booking/{pagenumber}/{pagesize}")
-    public Page<Booking> bookingPagination(@PathVariable Integer pagenumber, @PathVariable Integer pagesize){
-        return bookingService.getBookingPagination(pagenumber,pagesize);
+    @GetMapping("/pageing-and-sorting-booking/{pagenumber}/{pagesize}")
+    public Page<Booking> bookingPagination(@PathVariable Integer pagenumber, @PathVariable Integer pagesize) {
+        return bookingService.getBookingPagination(pagenumber, pagesize);
     }
 
     @PostMapping

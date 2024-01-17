@@ -1,5 +1,6 @@
 package com.aditya.hotelmanagement.service;
 
+import com.aditya.hotelmanagement.exception.NotFoundException;
 import com.aditya.hotelmanagement.model.Booking;
 import com.aditya.hotelmanagement.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,17 +25,17 @@ public class BookingService {
         return bookingRepository.findAll();
     }
 
-    public Optional<Booking> getBookingById(Long id) {
-        return bookingRepository.findById(id);
+    public Booking getBookingById(Long id) {
+        return bookingRepository.findById(id).orElseThrow(() -> new NotFoundException("404", "Booking not found with id: " + id));
     }
 
-    public Optional<Booking> getBookingByCheckInDate(LocalDate date){
-        return bookingRepository.findByCheckInDate(date);
+    public Booking getBookingByCheckInDate(LocalDate date) {
+        return bookingRepository.findByCheckInDate(date).orElseThrow(() -> new NotFoundException("404", "Booking not found with Check In Date: " + date));
     }
 
     public Page<Booking> getBookingPagination(Integer pagenumber, Integer pagesize) {
-        Sort sort = Sort.by(Sort.Direction.ASC,"checkInDate");
-        Pageable pageable = PageRequest.of(pagenumber,pagesize,sort);
+        Sort sort = Sort.by(Sort.Direction.ASC, "checkInDate");
+        Pageable pageable = PageRequest.of(pagenumber, pagesize, sort);
         return bookingRepository.findAll(pageable);
     }
 
