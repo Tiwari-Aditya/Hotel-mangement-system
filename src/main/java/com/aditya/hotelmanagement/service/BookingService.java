@@ -1,5 +1,6 @@
 package com.aditya.hotelmanagement.service;
 
+import com.aditya.hotelmanagement.exception.BadRequestException;
 import com.aditya.hotelmanagement.exception.NotFoundException;
 import com.aditya.hotelmanagement.model.Booking;
 import com.aditya.hotelmanagement.repository.BookingRepository;
@@ -26,7 +27,15 @@ public class BookingService {
     }
 
     public Booking getBookingById(Long id) {
-        return bookingRepository.findById(id).orElseThrow(() -> new NotFoundException("404", "Booking not found with id: " + id));
+        if (id == null || id <= 0) {
+            throw new BadRequestException("400", "Invalid booking ID: " + id);
+        }
+       Optional<Booking> booking = bookingRepository.findById(id);
+        if(booking.isEmpty()){
+            throw new NotFoundException("404", "Booking not found with id: " + id);
+        }
+//        return bookingRepository.findById(id).orElseThrow(() -> new NotFoundException("404", "Booking not found with id: " + id));
+        return booking.get();
     }
 
     public Booking getBookingByCheckInDate(LocalDate date) {

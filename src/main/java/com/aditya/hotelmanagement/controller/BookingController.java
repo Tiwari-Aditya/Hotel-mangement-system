@@ -1,8 +1,6 @@
 package com.aditya.hotelmanagement.controller;
 
 import com.aditya.hotelmanagement.customresponse.ApiResponse;
-import com.aditya.hotelmanagement.exception.BadRequestException;
-import com.aditya.hotelmanagement.exception.NotFoundException;
 import com.aditya.hotelmanagement.model.Booking;
 import com.aditya.hotelmanagement.service.BookingService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -26,7 +23,7 @@ public class BookingController {
     @GetMapping
     public ResponseEntity<ApiResponse> getAllBookings() {
         List<Booking> bookings = bookingService.getAllBookings();
-        ApiResponse response = new ApiResponse("success","All Bookings",bookings);
+        ApiResponse response = new ApiResponse("success", "All Bookings", bookings);
         return ResponseEntity.ok(response);
     }
 
